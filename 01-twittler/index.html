@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+  <title>Twittler</title>
+    <script src="jquery.js"></script>
+    <script src="data_generator.js"></script>
+    <script src="moment.js"></script>
+    <script src="underscore.js"></script>
+</head>
+<body>
+  <article>
+  </article>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $article = $('article');
+
+    for(var i = 0; i < streams.home.length; i++){
+      $('article').append("<p>" + streams.home[i].message + "</p>");
+    }
+
+
+
+  });
+  </script>
+</body>

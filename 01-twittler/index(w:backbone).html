@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Twittler</title>
+    <link href="stylesheet.css" type="text/css" rel="stylesheet">
+    <script src="jquery.js"></script>
+    <script src="data_generator.js"></script>
+    <script src="moment.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Twittler</h1>
+      <input id='newTweet' type="tweet" size="35" placeholder="Enter a new tweet here!">
+      <input id='submitTweet' type="submit" value="Tweet!">
+      <ul>
+        <li><a class='filters' data-user='home' href="#">Home</a></li>
+        <li><a class='filters' data-user='myTweets' href="#">My Tweets</a></li>
+        <li><a class='filters' data-user='shawndrost' href="#">Shawn Drost</a></li>
+        <li><a class='filters' data-user='sharksforcheap' href="#">Sharks For Cheap</a></li>
+        <li><a class='filters' data-user='mracus' href="#">MRacus</a></li>
+        <li><a class='filters' data-user='douglascalhoun' href="#">DouglasCalhoun</a></li>
+      </ul>
+    </header>
+    <article>
+    </article>
+<!--     <script>
+      var $article = $('article');
+      var timeoutID = null;
+
+      var showTweets = function(userName) {
+        $article.html('');
+        var userNameShort;
+        if (userName === 'home') {
+          userNameShort = streams.home;
+        } else {
+          userNameShort = streams.users[userName];
+        };
+        var index = userNameShort.length - 1;
+        while(index >= 0){
+          var tweet = userNameShort[index];
+          var $tweet = $('<div></div>');
+          var tweetTime = moment(tweet.created_at).fromNow();
+          $tweet.html('@' + '<a class ="filters" href="#" data-user=' + tweet.user + '>' + tweet.user + '</a>' + ': ' + tweet.message + ": tweeted " + tweetTime);
+          $tweet.appendTo($article);
+          index -= 1;
+        };
+        timeoutID = setTimeout(showTweets, 5000, userName);
+      };
+
+      $('.filters').on('click', function() {
+        clearTimeout(timeoutID);
+        showTweets(this.getAttribute("data-user"))
+      });
+        
+      $('submitTweet').click(function(e) {
+        e.preventDefault();
+        var uri = $('#newTweet').attr('action');
+        var description = $('#newTweet').val();
+        $.post(uri, {description: description})
+      })
+
+      $(document).ready(function(){
+		    showTweets('home');
+      });
+    </script> -->
+  </body>
+</html>
