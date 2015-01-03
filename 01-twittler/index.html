@@ -5,24 +5,95 @@
     <script src="data_generator.js"></script>
     <script src="moment.js"></script>
     <script src="underscore.js"></script>
+    <script type="text/javascript" src="backbone.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheet1.css">
 </head>
 <body>
-  <article>
-  </article>
+  <header>Twittler</header>
+  <div class="container-fluid">
+    <div class="row">
+      <div id="users" class="col-sm-3"></div>
+      <div id="tweets" class="col-sm-9"></div>
+    </div>
+  </div>
   <script type="text/javascript">
   $(document).ready(function(){
-    $article = $('article');
-    setInterval(function(){
-      _.each(streams.home, function(item){
-        $('article').prepend("<p>" + item.user + " : " + item.message + "</p>");
+    var $tweets = $('#tweets');
+    var $users = $('#users');
+
+    var UserLoader = function(){
+      $users.html('')
+      $users.append("<div id='all-users' class='col-sm-3'>Users</div><br>" )
+      _.each(users, function(user){
+        $users.append("<a href='#'><p id='user' data-user=" + user + ">@" + user + "</p></a>")
+      });
+
+      $users.append("<div id='to_hide'><input id='user_name' type='text'></input><button id='username_input'>Enter username:</button></div>");
+      $users.append("<div id='tweet_msg'><input id='message' type='text'></input><button id='msg_send'>Send</button></div>")
+      $('#tweet_msg').hide();
+    };
+
+    var TweetLoader = function(username){
+      $tweets.html('');
+      if(username === undefined){
+        var streams_to_load = streams.home;
+      }
+      else{
+        var streams_to_load = streams.users[username];
+      }
+     _.each(streams_to_load, function(item){
+        var timestamp = moment(item.created_at).fromNow();
+        $tweets.prepend("<a id='wtf' href=# ><p id='user' data-user=" + item.user + " > @" + item.user + "</a> : " + item.message + " <em>"+  timestamp  +"</em></p>");
+      });
+    };
+
+    var UserInput = function(){
+      var $user_name = $('#user_name');
+      $(document).on('click', '#username_input', function() {
+        window.visitor = $user_name.val()
+        streams.users[visitor] = [];
+        window.users.push(visitor)
+        $users.append("<div id='tweet_msg'><input id='message' type='text'></input><button id='msg_send'>Send</button></div>");
+        UserLoader();
+        $('div #to_hide').hide();
+        $('div #tweet_msg').show();
+      });
+    };
+
+    var MessageSender = function(){
+      $(document).on('click','#msg_send', function(){
+        var message = $('#message').val()
+        writeTweet(message);
+        TweetLoader();
+        $('#message').val('')
       })
-      // for(var i = 0; i < streams.home.length; i++){
-      //   $('article').append("<p>" + streams.home[i].message + "</p>");
-      // }
-    }, 5000)
+    }
 
+    var show_user_tweets = function(){
+    $(document).on('click', '#user', function(){
+      clearInterval(intervalid)
+      console.log(this)
+      console.log(this.hasAttribute("data-user"))
+      var user_to_load = this.getAttribute("data-user");
+      TweetLoader(user_to_load);
+      intervalid = setInterval(TweetLoader, 5000, user_to_load);
+    });}
 
-
+    var show_all_tweets = function(){
+     $(document).on('click', '#all-users', function(){
+      clearInterval(intervalid)
+      TweetLoader();
+      intervalid = setInterval(TweetLoader, 5000);
+     });}
+   
+    UserLoader();
+    TweetLoader();
+    UserInput();
+    MessageSender();
+    show_user_tweets();
+    show_all_tweets();
+    var intervalid = setInterval(TweetLoader, 5000);
   });
   </script>
 </body>

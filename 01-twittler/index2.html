@@ -10,7 +10,7 @@
     <script src="backbone.js"></script>
   </head>
   <body>
-<!--     <header>
+    <header>
       <h1>Twittler</h1>
       <input id='newTweet' type="tweet" size="35" placeholder="Enter a new tweet here!">
       <input id='submitTweet' type="submit" value="Tweet!">
@@ -24,8 +24,8 @@
       </ul>
     </header>
     <article>
-    </article> -->
-    <!-- <script>
+    </article>
+    <script>
       $(document).ready(function(){
         var $article = $('article');
         var timeoutID = null;
@@ -60,13 +60,14 @@
         
         $('submitTweet').click(function(e) {
         	e.preventDefault();
+          debugger
         	var uri = $('#newTweet').attr('action');
         	var description = $('#newTweet').val();
         	$.post(uri, {description: description})
         })
 
       });
-    </script> -->
+    </script>
 
     
   </body>
