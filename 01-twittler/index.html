@@ -12,10 +12,14 @@
   <script type="text/javascript">
   $(document).ready(function(){
     $article = $('article');
-
-    for(var i = 0; i < streams.home.length; i++){
-      $('article').append("<p>" + streams.home[i].message + "</p>");
-    }
+    setInterval(function(){
+      _.each(streams.home, function(item){
+        $('article').prepend("<p>" + item.user + " : " + item.message + "</p>");
+      })
+      // for(var i = 0; i < streams.home.length; i++){
+      //   $('article').append("<p>" + streams.home[i].message + "</p>");
+      // }
+    }, 5000)
 
 
 
