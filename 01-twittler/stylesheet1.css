@@ -1,0 +1,15 @@
+header {
+    height: 100px;
+    font-size: 4em;
+    padding-top: 10px;
+    background-color: #40ade5;
+    text-align: center;
+}
+
+#users {
+  background-color: #d3d3d3;
+}
+
+#tweets{
+  background-color: #c7e7f7;
+}
