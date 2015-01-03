@@ -260,16 +260,7 @@ var _ = { };
     // time it's called.
       var ran = false;
       var value;
-      
-      // var new_func = function(arg){
-        
-      //   while(ran === false){
-      //     value = arg;
-      //     ran = true;
-      //   };
-      //   return value;
-      // };
-      // return new_func;
+  
       return function(){
         if (!ran){
           value = func.apply(this, arguments);
@@ -295,20 +286,20 @@ var _ = { };
   // _.memoize should return a function that when called, will check if it has
   // already computed the result for the given argument and return that value
   // instead if possible.
-  // _.memoize = function(func) {
-  //   return func;
-  //   // var memoized = {};
-  //   // if (memoized[func]) {
-  //   //   return memoized[func];
-  //   // } else {
-  //   //   memoized[func] = func;
-  //   //   return func;
-  //   // }
-  // };
 
-  _.memoize = function() {
 
-  };
+  _.memoize = function(func) {
+      return function(arg){
+        var memoized = {};
+        if(memoized[arg]){
+          return memoized[arg];
+        }
+        else{
+          memoized[arg] = func(arg);
+          return memoized[arg];
+        }
+      }
+    };
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
@@ -338,8 +329,17 @@ var _ = { };
   // TIP: This function's test suite will ask that you not modify the original
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
-  _.shuffle = function() {
-
+  _.shuffle = function(arr) {
+    
+    var results = [];
+    _.each(arr, function(item){
+      var rand_num = Math.floor(Math.random() * arr.length);
+      while(results[rand_num] != undefined){
+        rand_num = Math.floor(Math.random() * arr.length);
+      }
+      results[rand_num] = item;
+    })
+    return results;
   };
 
 
@@ -362,19 +362,7 @@ var _ = { };
   //
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
-  // _.zip = function() {
-  //   var arg = arguments.length;
-  //   var result = [];
-  //   _.each(arguments, function(item) {
-  //     var result2 = [];
-  //     result2.length = arg;
-  //     _.each(item, function(value, index) {
-  //       result2[index] = value;
-  //     });
-  //     result.push(result2);
-  //   });
-  //   return result;
-  // };
+
 
   _.zip = function() {
 
@@ -384,16 +372,36 @@ var _ = { };
   // The new array should contain all elements of the multidimensional array.
   //
   // Hint: Use Array.isArray to check if something is an array
-  _.flatten = function() {
+  _.flatten = function(multi_dem_array) {
+    return _.reduce(multi_dem_array, function(result, item){
+        if (Array.isArray(item)){
+          return result.concat(_.flatten(item));
+        }
+        else{
+          return result.concat(item);}
+    }, [])
+
 
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+      var args = arguments
+      console.log(args)
+      var first_arr = args[0];
+      var other_arr = [].slice.call(args, 1);
+      var found_vals = [];
+      _.each(first_arr, function(value){
+        if(_.every(other_arr, function(arr){return !!arr.indexOf(value);})){
+          found_vals.push(value);
+        }
+      });
+      
     // Note: this solution doesn't account for arrays with the same value multiple times
     // ex. _.intersection(['moe', 'moe'], []);
-
+    // return found_vals;
+    return found_vals;
   };
 
   // Take the difference between one array and a number of other arrays.
