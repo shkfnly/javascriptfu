@@ -48,10 +48,10 @@ var _ = { };
   // Note: _.each does not have a return value, but rather simply runs the
   // iterator function over each item in the input collection.
   _.each = function(input, iterator) {
-    if(Array.isArray(input))
+    if(Array.isArray(input)){
     for(var i = 0; i < input.length; i ++){
       iterator(input[i], i, input);
-    }
+    }}
     else {
       for (var key in input){
         iterator(input[key], key, input);
@@ -353,7 +353,7 @@ var _ = { };
   // If iterator is a string, sort objects by that property with the name
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
-  _.sortBy = function() {
+  _.sortBy = function(collection, value) {
 
   };
 
